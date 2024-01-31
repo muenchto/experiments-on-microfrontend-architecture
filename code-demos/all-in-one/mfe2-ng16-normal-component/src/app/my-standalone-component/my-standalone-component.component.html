@@ -1,0 +1,16 @@
+<div class="card">
+  My standalone Angular component running Angular {{ version }}
+  <p>
+    Component initialized at
+    {{ lastTimeInitialized | date : "medium" }}
+  </p>
+
+  <p>
+    Data was last loaded at
+    {{ lastTimeLoaded$ | async | date : "medium" }}
+  </p>
+  <p>Input value is: {{ inputText }}</p>
+  <p>
+    <button (click)="sendMessage()">Send message</button>
+  </p>
+</div>

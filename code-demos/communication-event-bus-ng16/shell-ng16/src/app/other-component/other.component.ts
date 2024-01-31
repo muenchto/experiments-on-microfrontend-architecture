@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { EventBus } from '../event-bus';
 import { MessageSentEvent } from '../mfe1-component/message-sent-event';
+import { Mfe1DataChangedEvent } from '../mfe1-data-changed.event';
 
 @Component({
   selector: 'app-other',
@@ -8,6 +9,7 @@ import { MessageSentEvent } from '../mfe1-component/message-sent-event';
   styleUrls: ['./other.component.css'],
 })
 export class OtherComponent {
+
 
   public constructor(private readonly _eventBus: EventBus) {
     this.subscribeToEvents();
@@ -31,5 +33,10 @@ export class OtherComponent {
 
   public messageSentEventHandler(event: MessageSentEvent): void {
     this.messageSentEventAsJson = JSON.stringify(event);
+  }
+
+  publishEvent() {
+    console.log('Publish: Mfe1DataChanged');
+    this._eventBus.publish(new Mfe1DataChangedEvent());
   }
 }

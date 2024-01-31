@@ -1,4 +1,13 @@
-<my-mfe-element
+<no-containner *ngIf="remoteMfeLoadError; else showMfe">
+  <h5>Failed to load remote MFE</h5>
+</no-containner>
+<ng-template #showMfe>
+  <my-mfe-element *ngIf="mfeHasBootstrapped; else mfeLoading"
   input-text="Hello from shell!"
   (message-sent)="messageSentEventHandler($event)"
 ></my-mfe-element>
+<ng-template #mfeLoading>
+  <h5>Loading remote MFE...</h5>
+  </ng-template>
+</ng-template>
+

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EnvironmentInjector, OnInit } from '@angular/core';
 import { EventBus } from '../event-bus';
 import { MessageSentEvent } from './message-sent-event';
-import { LoadRemoteModuleOptions, loadRemoteModule } from '@angular-architects/module-federation';
+import {
+  LoadRemoteModuleOptions,
+  loadRemoteModule,
+} from '@angular-architects/module-federation';
 
 @Component({
   selector: 'app-mfe1',
@@ -9,16 +12,28 @@ import { LoadRemoteModuleOptions, loadRemoteModule } from '@angular-architects/m
   styleUrls: ['./mfe1.component.css'],
 })
 export class Mfe1Component implements OnInit {
-  public constructor(private readonly _eventBus: EventBus) {}
+  public constructor(
+    private readonly _eventBus: EventBus,
+    private injector: EnvironmentInjector
+  ) {}
+  protected remoteMfeLoadError = false;
+  protected mfeHasBootstrapped = false;
 
   public async ngOnInit(): Promise<void> {
+    console.log('Mfe1Component initializing');
     const loadRemoteWebpackModuleOptions: LoadRemoteModuleOptions = {
       type: 'module',
       exposedModule: './standalone-component-as-web-component',
       remoteEntry: 'http://localhost:4201/remoteEntry.js',
     };
-    const webpackModule: any = await loadRemoteModule(loadRemoteWebpackModuleOptions);
-    await webpackModule.bootstrapMyComponentAsync();
+    const webpackModule: any = await loadRemoteModule(
+      loadRemoteWebpackModuleOptions
+    ).catch((err: any) => (this.remoteMfeLoadError = true));
+    if (this.remoteMfeLoadError) {
+      return;
+    }
+    await webpackModule.bootstrapMyComponentAsync(this._eventBus);
+    this.mfeHasBootstrapped = true;
   }
 
   public messageSentEventHandler(event: Event): void {

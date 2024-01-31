@@ -16,6 +16,7 @@ export class EventBus {
   private _subject = new BehaviorSubject<any>({});
 
   public publish<T>(event: T) {
+    console.log('EventBus published: ', event);
     this._subject.next(event);
   }
 

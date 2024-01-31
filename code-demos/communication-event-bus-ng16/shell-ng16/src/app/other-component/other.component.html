@@ -1,5 +1,11 @@
 <div class="card">
-  This component will listen to events from the mfe1 component using an event
-  bus
-  <p>message sent event: {{ messageSentEventAsJson }}</p>
+  <div>
+    This component will listen to events from the mfe1 component using an event
+    bus
+    <p>message sent event: {{ messageSentEventAsJson }}</p>
+  </div>
+  This component can also publish an event
+  <p>
+    <button (click)="publishEvent()">I have changed MFE1-related data</button>
+  </p>
 </div>

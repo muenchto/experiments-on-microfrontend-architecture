@@ -1,0 +1,8 @@
+<no-containner *ngIf="!remoteMfeLoaded">
+  <h5>Loading remote MFE...</h5>
+</no-containner>
+<ng-container #mfe>
+  <ng-container *ngIf="remoteMfeLoaded && remoteMfeLoadError">
+    <h5>Failed to load remote MFE</h5>
+  </ng-container>
+</ng-container>
