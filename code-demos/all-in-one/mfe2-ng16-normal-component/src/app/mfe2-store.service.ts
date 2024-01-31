@@ -1,4 +1,4 @@
-import { EnvironmentInjector, Inject, Injectable, inject, runInInjectionContext } from '@angular/core';
+import { EnvironmentInjector, Inject, Injectable, Optional, inject, runInInjectionContext } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export abstract class EventBus {
@@ -15,7 +15,7 @@ const initialState: Mfe1State = {
 
 @Injectable({providedIn: 'root' })
 export class Mfe2StoreService {
-  constructor(injector: EnvironmentInjector, @Inject('eventBus') eventBus: EventBus){
+  constructor(@Optional() @Inject('eventBus') eventBus: EventBus){
     this.loadOnEventFromEventBus(eventBus);
   }
 
@@ -27,8 +27,8 @@ export class Mfe2StoreService {
     }
   }
 
-  public loadOnEventFromEventBus(eventBus: EventBus) {
-      eventBus.getEvent$<void>('mfe2').subscribe(() => {
+  public loadOnEventFromEventBus(eventBus: EventBus | undefined) {
+      eventBus?.getEvent$<void>('mfe2').subscribe(() => {
         this.load();
     });
     

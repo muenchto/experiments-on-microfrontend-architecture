@@ -19,7 +19,13 @@ import { EventBus } from 'src/app/event-bus';
 
 @Component({
   selector: 'app-mfe-wrapper',
-  templateUrl: './mfe-wrapper.component.html',
+  template: ` <no-containner *ngIf="remoteMfeLoading">
+      <h5>Loading remote MFE...</h5>
+    </no-containner>
+    <ng-container *ngIf="remoteMfeLoadError">
+      <h5>Failed to load remote MFE</h5>
+    </ng-container>
+    <div class="mfe-container" #mfe></div>`,
   styles: [
     `
       :host {
@@ -40,7 +46,7 @@ export class MfeWrapperComponent implements OnInit {
   private readonly _viewContainerRef?: ViewContainerRef;
 
   protected remoteMfeLoadError = false;
-  protected remoteMfeLoaded = false;
+  protected remoteMfeLoading = true;
 
   private eventBus = inject(EventBus);
 
@@ -60,7 +66,10 @@ export class MfeWrapperComponent implements OnInit {
     const webpackModule: any = await loadRemoteModule(config).catch(
       (err: any) => (this.remoteMfeLoadError = true)
     );
-    this.remoteMfeLoaded = true;
+    this.remoteMfeLoading = false;
+    if (this.remoteMfeLoadError) {
+      return;
+    }
 
     const componentRef: ComponentRef<any> =
       this._viewContainerRef.createComponent(

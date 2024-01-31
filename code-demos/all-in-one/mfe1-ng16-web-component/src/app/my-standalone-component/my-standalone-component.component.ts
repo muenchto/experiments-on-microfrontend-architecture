@@ -12,10 +12,10 @@ import { interval, map, tap } from 'rxjs';
 })
 export class MyStandaloneComponent implements OnInit {
   public readonly version = VERSION.full;
-  private store = inject(Mfe1StoreService);
+  private store = inject(Mfe1StoreService, { optional: true });
 
   protected lastTimeInitialized: Date | null = null;
-  protected lastTimeLoaded$ = this.store.state.pipe(
+  protected lastTimeLoaded$ = this.store?.state.pipe(
     map((state) => state.lastTimeLoaded),
     tap((lastTimeLoaded) => {
       console.log('Mfe1 received lastTimeLoaded update: ', lastTimeLoaded);
@@ -31,7 +31,7 @@ export class MyStandaloneComponent implements OnInit {
   public messageSentEvent: EventEmitter<string> = new EventEmitter<string>();
 
   ngOnInit() {
-    this.store.loadIfEmpty();
+    this.store?.loadIfEmpty();
     this.lastTimeInitialized = new Date();
     console.log('Mfe1 initialized');
     

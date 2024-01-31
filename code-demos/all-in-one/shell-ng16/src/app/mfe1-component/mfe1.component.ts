@@ -10,14 +10,13 @@ import {
   selector: 'app-mfe1',
   templateUrl: './mfe1.component.html',
   styles: [],
-  encapsulation: ViewEncapsulation.ShadowDom
 })
 export class Mfe1Component implements OnInit {
   public constructor(
     private readonly _eventBus: EventBus,
   ) {}
   protected remoteMfeLoadError = false;
-  protected mfeHasBootstrapped = false;
+  protected mfeLoaded = false;
 
   public async ngOnInit(): Promise<void> {
     console.log('Mfe1Component initializing');
@@ -29,11 +28,11 @@ export class Mfe1Component implements OnInit {
     const webpackModule: any = await loadRemoteModule(
       loadRemoteWebpackModuleOptions
     ).catch((err: any) => (this.remoteMfeLoadError = true));
+    this.mfeLoaded = true;
     if (this.remoteMfeLoadError) {
       return;
     }
     await webpackModule.bootstrapMyComponentAsync(this._eventBus);
-    this.mfeHasBootstrapped = true;
   }
 
   public outputEventHandler(event: Event): void {

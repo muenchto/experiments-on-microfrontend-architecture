@@ -1,5 +1,11 @@
 .card{
   border: 1px solid #080da1;
   color: #080da1;
+  background-color: azure;
   padding: 20px;
+}
+p{
+  font-size: smaller;
+  margin-top: 4px;
+  margin-bottom: 4px;
 }
