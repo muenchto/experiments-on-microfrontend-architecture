@@ -27,9 +27,7 @@ export async function bootstrapMyComponentAsync(eventBus: any): Promise<void> {
   }
 
   const appConfig: ApplicationConfig = {
-    // providers: [{ provide: Mfe1StoreService, useFactory: () => {
-    //   console.log('Mfe1StoreService factory');
-    //   return new Mfe1StoreService(eventBus)}}],
+
     providers: [forwardRef(() => ({provide: 'eventBus', useValue: eventBus}))],
   };
   const appRef: ApplicationRef = await createApplication(appConfig);
@@ -39,7 +37,4 @@ export async function bootstrapMyComponentAsync(eventBus: any): Promise<void> {
   );
   customElements.define('my-mfe-element', myStandaloneComponentAsWebComponent);
   console.log('Mfe1 bootstrapped');
-  // console.log(appRef.injector);
-  // console.log('going to set up Mfe1StoreService')
-  // appRef.injector.get(Mfe1StoreService).loadOnEventFromEventBus(EventBus)
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { EventBus } from '../event-bus';
-import { MessageSentEvent } from '../mfe1-component/message-sent-event';
+import { MessageSentEvent } from '../mfe1-wc/message-sent-event';
 
 export class Mfe1DataChangedEvent {
   constructor() { }

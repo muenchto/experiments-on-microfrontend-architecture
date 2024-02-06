@@ -7,4 +7,5 @@ import { Component, VERSION } from '@angular/core';
 })
 export class AppComponent {
   public readonly version: string = VERSION.full;
+
 }

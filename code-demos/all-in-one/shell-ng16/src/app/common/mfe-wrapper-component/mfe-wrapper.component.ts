@@ -1,7 +1,6 @@
 import {
   Component,
   ComponentRef,
-  EnvironmentInjector,
   EventEmitter,
   Input,
   OnInit,
@@ -10,20 +9,23 @@ import {
   ViewEncapsulation,
   inject,
 } from '@angular/core';
-import { MessageSentEvent as OutputEvent } from './message-sent-event';
 import {
+  LoadRemoteModuleEsmOptions,
   LoadRemoteModuleOptions,
   loadRemoteModule,
 } from '@angular-architects/module-federation';
 import { EventBus } from 'src/app/event-bus';
+import { CommonModule, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-mfe-wrapper',
-  template: ` <no-containner *ngIf="remoteMfeLoading">
+  standalone: true,
+  imports: [CommonModule],
+  template: ` <ng-container *ngIf="remoteMfeLoading">
       <h5>Loading remote MFE...</h5>
-    </no-containner>
+    </ng-container>
     <ng-container *ngIf="remoteMfeLoadError">
-      <h5>Failed to load remote MFE</h5>
+      <h5>Failed to load remote MFE from {{config?.remoteEntry}}</h5>
     </ng-container>
     <div class="mfe-container" #mfe></div>`,
   styles: [
@@ -36,7 +38,7 @@ import { EventBus } from 'src/app/event-bus';
   encapsulation: ViewEncapsulation.ShadowDom,
 })
 export class MfeWrapperComponent implements OnInit {
-  @Input() public config: (LoadRemoteModuleOptions & { name?: string }) | null =
+  @Input() public config: (LoadRemoteModuleEsmOptions & { name?: string }) | null =
     null;
 
   @Input() public inputs: { [key: string]: unknown } = {};

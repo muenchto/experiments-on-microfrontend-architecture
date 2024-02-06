@@ -1,8 +1,10 @@
 import {
+  ChangeDetectorRef,
   Component,
   ComponentRef,
   ViewChild,
   ViewContainerRef,
+  inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OtherComponent } from '../other-component/other.component';
@@ -21,15 +23,11 @@ import {
   template: `
     <h1>Dashboard</h1>
     <app-other></app-other>
-    <app-mfe-wrapper
-      [config]="mfe2RemoteWebpackModuleOptions"
-      [inputs]="{ inputText: 'Hello first Mfe2! Greetings, your Shell' }"
-      [outputs]="{ 'messageSentEvent': { eventType: 'messageSent' } }"
-    ></app-mfe-wrapper>
+    
     <app-mfe-wrapper
       [config]="mfe2RemoteWebpackModuleOptions"
       [inputs]="{ inputText: 'Hello second Mfe2! Greetings, your Shell' }"
-      [outputs]="{ 'messageSentEvent': { eventType: 'messageSent' } }"
+      [outputs]="{ messageSentEvent: { eventType: 'messageSent' } }"
     ></app-mfe-wrapper>
   `,
 })
@@ -40,11 +38,12 @@ export class DashboardComponent {
   @ViewChild('mfe3', { read: ViewContainerRef, static: true })
   private readonly mfe3Wrapper?: WebComponentWrapper;
 
-  ngAfterViewInit() {
-    console.log('mfe3 wrapper', this.mfe3Wrapper);
+
+  ngOnInit(): void {
+   
   }
 
-  public readonly mfe2RemoteWebpackModuleOptions: LoadRemoteModuleOptions = {
+  public mfe2RemoteWebpackModuleOptions: LoadRemoteModuleOptions | null = {
     type: 'module',
     exposedModule: './my-standalone-component',
     remoteEntry: 'http://localhost:4202/remoteEntry.js',
@@ -68,4 +67,5 @@ export class DashboardComponent {
       console.log('mfe3 emitted: ', (event as CustomEvent).detail);
     },
   };
+
 }

@@ -2,25 +2,29 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ModuleFederationToolsModule } from '@angular-architects/module-federation-tools';
 import { AppComponent } from './app.component';
-import { Mfe1Component } from './mfe1-component/mfe1.component';
+import { Mfe1WCComponent } from './mfe1-wc/mfe1-wc.component';
 import { OtherComponent } from './other-component/other.component';
 import { AppRoutingModule } from './app-routering.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EventBus } from './event-bus';
 import { MfeWrapperComponent } from './common/mfe-wrapper-component/mfe-wrapper.component';
-
+import { RemoteMfeConfigInputComponent } from './common/remote-mfe-config-input/remote-mfe-config-input.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Mfe1Component,
+    Mfe1WCComponent,
     OtherComponent,
     DashboardComponent,
-    MfeWrapperComponent
   ],
-  imports: [BrowserModule, AppRoutingModule, ModuleFederationToolsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    ModuleFederationToolsModule,
+    RemoteMfeConfigInputComponent,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{provide: 'eventBus', useExisting: EventBus}],
+  providers: [{ provide: 'eventBus', useExisting: EventBus }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
