@@ -15,7 +15,7 @@ import {
   loadRemoteModule,
 } from '@angular-architects/module-federation';
 import { EventBus } from 'src/app/event-bus';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-mfe-wrapper',

@@ -22,6 +22,7 @@ import { RemoteMfeConfigInputComponent } from './common/remote-mfe-config-input/
     AppRoutingModule,
     ModuleFederationToolsModule,
     RemoteMfeConfigInputComponent,
+    MfeWrapperComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [{ provide: 'eventBus', useExisting: EventBus }],

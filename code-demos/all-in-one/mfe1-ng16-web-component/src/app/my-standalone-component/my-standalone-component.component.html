@@ -10,4 +10,8 @@
     {{ lastTimeLoaded$ | async | date : "medium" }}
   </p>
   <button (click)="sendMessage()">Send message</button>
+  <p>
+    This component can also publish events:
+    <button (click)="emitMfe2Event()">I have changed MFE2-related data</button>
+  </p>
 </div>

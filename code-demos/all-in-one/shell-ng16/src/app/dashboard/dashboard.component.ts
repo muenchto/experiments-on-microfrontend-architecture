@@ -10,6 +10,8 @@ import { CommonModule } from '@angular/common';
 import { OtherComponent } from '../other-component/other.component';
 import { AppModule } from '../app.module';
 import {
+  LoadRemoteEntryEsmOptions,
+  LoadRemoteModuleEsmOptions,
   LoadRemoteModuleOptions,
   loadRemoteModule,
 } from '@angular-architects/module-federation';
@@ -23,7 +25,9 @@ import {
   template: `
     <h1>Dashboard</h1>
     <app-other></app-other>
-    
+
+<app-mfe1 [hideUrlInput]="true"></app-mfe1>
+
     <app-mfe-wrapper
       [config]="mfe2RemoteWebpackModuleOptions"
       [inputs]="{ inputText: 'Hello second Mfe2! Greetings, your Shell' }"
@@ -32,40 +36,11 @@ import {
   `,
 })
 export class DashboardComponent {
-  @ViewChild('mfe', { read: ViewContainerRef, static: true })
-  private readonly _viewContainerRef?: ViewContainerRef;
 
-  @ViewChild('mfe3', { read: ViewContainerRef, static: true })
-  private readonly mfe3Wrapper?: WebComponentWrapper;
-
-
-  ngOnInit(): void {
-   
-  }
-
-  public mfe2RemoteWebpackModuleOptions: LoadRemoteModuleOptions | null = {
+  public mfe2RemoteWebpackModuleOptions: LoadRemoteModuleEsmOptions = {
     type: 'module',
     exposedModule: './my-standalone-component',
     remoteEntry: 'http://localhost:4202/remoteEntry.js',
-  };
-
-  public readonly mfe1WebComponentOptions: WebComponentWrapperOptions = {
-    remoteEntry: 'http://localhost:4203/remoteEntry.js',
-    type: 'module',
-    exposedModule: './standalone-component-as-web-component',
-    elementName: 'my-mfe3-component',
-  };
-
-  public readonly mfe1WebComponentProps: { [key: string]: unknown } = {
-    inputText: 'Hello from Shell',
-  };
-
-  public readonly mfe1WebComponentEvents: {
-    [key: string]: (event: Event) => void;
-  } = {
-    'message-sent': (event: Event) => {
-      console.log('mfe3 emitted: ', (event as CustomEvent).detail);
-    },
   };
 
 }

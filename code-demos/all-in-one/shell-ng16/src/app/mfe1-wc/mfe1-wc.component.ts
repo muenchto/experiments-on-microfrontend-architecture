@@ -1,4 +1,4 @@
-import { Component, EnvironmentInjector, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, EnvironmentInjector, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { EventBus } from '../event-bus';
 import { MessageSentEvent as OutputEvent } from './message-sent-event';
 import {
@@ -13,9 +13,10 @@ import {
   styleUrls: ['./mfe1-wc.component.scss'],
 })
 export class Mfe1WCComponent implements OnInit {
-  public constructor(
-    private readonly _eventBus: EventBus,
-  ) {}
+  private readonly _eventBus = inject(EventBus);
+
+  @Input() hideUrlInput = false;
+
   protected remoteMfeLoadError = false;
   protected mfeLoaded = false;
 
@@ -68,6 +69,10 @@ export class Mfe1WCComponent implements OnInit {
     // and republish it to the event bus. All this could happen inside the `EventBus`
     // implementation.
     const outputEvent = OutputEvent.fromCustomEvent(event);
-    this._eventBus.publish({type: 'messageSent', data: outputEvent});
+    this._eventBus.publish({type: 'messageSent', data: outputEvent.message});
+  }
+
+  publishMfe2Event() {
+    this._eventBus.publish({type: 'mfe2'});
   }
 }

@@ -1,4 +1,4 @@
-import { EnvironmentInjector, Inject, Injectable, Optional, inject, runInInjectionContext } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export abstract class EventBus {

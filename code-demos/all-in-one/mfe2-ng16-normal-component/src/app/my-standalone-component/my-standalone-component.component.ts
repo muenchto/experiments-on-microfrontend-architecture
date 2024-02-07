@@ -74,6 +74,6 @@ export class MyStandaloneComponent implements OnDestroy, OnInit {
   }
 
   public sendMessage(): void {
-    this.messageSentEvent.emit(`Mfe1: The time is ${new Date()}`);
+    this.messageSentEvent.emit(`A message from MFE Normal at ${new Date().toLocaleTimeString()}`);
   }
 }

@@ -1,14 +1,19 @@
 <app-remote-mfe-config-input
-(newUrl)="setNewUrl($event)"
+  *ngIf="!hideUrlInput"
+  (newUrl)="setNewUrl($event)"
 ></app-remote-mfe-config-input>
 <ng-container *ngIf="mfeLoaded; else mfeLoading">
   <my-mfe-element
     *ngIf="!remoteMfeLoadError; else showError"
     input-text="Hello from shell!"
     (message-sent)="outputEventHandler($event)"
+    (changed-mfe2-data)="publishMfe2Event()"
   ></my-mfe-element>
   <ng-template #showError>
-    <h5>Failed to load remote MFE from {{loadRemoteWebpackModuleOptions.remoteEntry}}</h5>
+    <h5>
+      Failed to load remote MFE from
+      {{ loadRemoteWebpackModuleOptions.remoteEntry }}
+    </h5>
   </ng-template>
 </ng-container>
 

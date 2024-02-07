@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MfeWrapperComponent } from '../common/mfe-wrapper-component/mfe-wrapper.component';
 import { RemoteMfeConfigInputComponent } from '../common/remote-mfe-config-input/remote-mfe-config-input.component';
-import { LoadRemoteModuleEsmOptions, LoadRemoteModuleOptions } from '@angular-architects/module-federation';
+import { LoadRemoteModuleEsmOptions } from '@angular-architects/module-federation';
 
 @Component({
   selector: 'app-mfe2-normal',

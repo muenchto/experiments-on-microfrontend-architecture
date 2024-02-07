@@ -13,6 +13,7 @@ import { interval, map, tap } from 'rxjs';
 export class MyStandaloneComponent implements OnInit {
   public readonly version = VERSION.full;
   private store = inject(Mfe1StoreService, { optional: true });
+  private eventBus = inject(EventBus, { optional: true });
 
   protected lastTimeInitialized: Date | null = null;
   protected lastTimeLoaded$ = this.store?.state.pipe(
@@ -21,24 +22,26 @@ export class MyStandaloneComponent implements OnInit {
       console.log('Mfe1 received lastTimeLoaded update: ', lastTimeLoaded);
     })
   );
-
-  constructor() {
-    console.log('Mfe1 constructor');
-  }
   
 
   @Output("message-sent")
   public messageSentEvent: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output("changed-mfe2-data")
+  public changedMfe2Data: EventEmitter<void> = new EventEmitter<void>();
+
   ngOnInit() {
     this.store?.loadIfEmpty();
     this.lastTimeInitialized = new Date();
-    console.log('Mfe1 initialized');
     
   }
 
   public sendMessage(): void {
-    this.messageSentEvent.emit(`The time is ${new Date()}`);
+    this.messageSentEvent.emit(`A message from MFE Web Component at ${new Date().toLocaleTimeString()}`);
+  }
+
+  emitMfe2Event() {
+    this.changedMfe2Data.emit()
   }
 }
 
